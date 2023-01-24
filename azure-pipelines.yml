@@ -8,12 +8,15 @@ trigger:
 
 pool:
   name: Default
+  demands: vm
 
 steps:
 - task: TerraformInstaller@0
+  displayName: TerraformInstaller
   inputs:
     terraformVersion: 'latest'
 - task: TerraformTaskV3@3
+  displayName: terraform init
 
   inputs:
     provider: 'azurerm'
@@ -24,11 +27,13 @@ steps:
     backendAzureRmContainerName: 'container1'
     backendAzureRmKey: 'pipln1.tfstate'
 - task: TerraformTaskV3@3
+  displayName: terraform plan
   inputs:
       provider: 'azurerm'
       command: 'plan'
       environmentServiceNameAzureRM: 'azure connection'
 - task: TerraformTaskV3@3
+  displayName: terraform apply
   inputs:
     provider: 'azurerm'
     command: 'apply'
